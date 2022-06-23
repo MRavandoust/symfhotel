@@ -1,0 +1,10 @@
+<h4 class="mb-4 text-center">Réservez une chambre</h4>
+{{ form_start(form,  {'attr': {'class' : 'ra-form'}}) }}
+<div class="check-date-label">
+	{{ form_row(form.from) }}
+</div>
+<div class="check-date-label">
+	{{ form_row(form.to) }}
+</div>
+<button type="submit">Voir les disponibilités</button>
+{{ form_end(form) }}

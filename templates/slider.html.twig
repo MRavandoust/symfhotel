@@ -1,0 +1,27 @@
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="hero-text">
+                        <h1>Sona A Luxury Hotel</h1>
+                        <p>Voici les meilleurs sites de réservation d'hôtel, y compris des recommandations pour les voyages internationaux et pour trouver des chambres d'hôtel à bas prix.</p>
+                        <a href="#" class="primary-btn">Découvrez maintenant</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
+                    <div class="booking-form">
+
+                        {% include "home/search_form.html.twig" %}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-slider owl-carousel">
+       {% for slide in slides %}
+                 <div class="hs-item set-bg" data-setbg="{{ asset('img/slider/'~ slide.image) }}"></div>
+       {% endfor %}
+      
+        </div>
+    </section>

@@ -1,0 +1,150 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ chambre.titre }}
+{% endblock %}
+
+{% block body %}
+
+	<!-- Breadcrumb Section Begin -->
+	<div class="breadcrumb-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb-text">
+						<h2>Nos Chambres</h2>
+						<div class="bt-option">
+							<a href="{{ path('app_home') }}">Accueil</a>
+							<a href="{{ path('app_chambre') }}">Chambres</a>
+							<span>Details</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Breadcrumb Section End -->
+	<!-- Room Details Section Begin -->
+	<section class="room-details-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="room-details-item">
+						<img src="{{ asset('img/room/'~ chambre.image) }}" class="img-fluid" style="width: 100%" alt="">
+						<div class="rd-text">
+							<div class="rd-title">
+								<h3>{{ chambre.titre }}</h3>
+								<div class="rdt-right">
+									<div class="rating">
+										<i class="icon_star"></i>
+										<i class="icon_star"></i>
+										<i class="icon_star"></i>
+										<i class="icon_star"></i>
+										<i class="icon_star-half_alt"></i>
+									</div>
+									<a href="#">Réservez maintenant</a>
+								</div>
+							</div>
+							<h2>{{ (chambre.prix / 100) | format_number({fraction_digit: 2}) }}€<span>/Pernight</span>
+							</h2>
+							<table>
+								<tbody>
+									<tr>
+										<td class="r-o">Carégorie:</td>
+										<td>{{ chambre.categorie | capitalize }}</td>
+									</tr>
+									<tr>
+										<td class="r-o">Services:</td>
+										<td>Wifi, Television, Bathroom,...</td>
+									</tr>
+
+								</tbody>
+							</table>
+							<h5>Déscription :</h5>
+							<p>
+								{{ chambre.description | capitalize }}
+							</p>
+						</div>
+					</div>
+					<div class="rd-reviews">
+						<h4>Commentaires</h4>
+						{% for avis in lesAvis %}
+
+							<div class="review-item">
+								<div class="ri-pic">
+									<img src="{{ asset('img/avatar/avatar-1.jpg') }}" alt="">
+								</div>
+								<div class="ri-text">
+									<span>{{ avis.enregistreAt | date('d/m/Y H:i:s') }}</span>
+									<h5>{{ avis.user.prenom }}</h5>
+									<p>{{ avis.message }}</p>
+								</div>
+							</div>
+
+						{% endfor %}
+
+					</div>
+					<div class="review-add">
+
+						{% for notification in app.flashes('success') %}
+							<div class="col-md-6 mx-auto text-center alert alert-success">
+								{{ notification }}
+							</div>
+						{% endfor %}
+			    {# ------------------------------------ Avis Form --------------------------------------- #}
+						<h4 class="mb-3">Donnez votre avis</h4>
+						{{ form_start(form,  {'attr': {'class' : 'ra-form'}}
+						) }}
+
+						{{ form_row(form.message) }}
+						<button type="submit">Envoyer</button>
+
+						{{ form_end(form) }}
+
+					</div>
+				</div>
+
+				{# ------------------------------------ Reservation Form --------------------------------------- #}
+				<div class="col-lg-4">
+					<div class="room-booking">
+						{% for notification in app.flashes('reserve-success') %}
+							<div class="col-12 mx-auto text-center alert alert-success">
+								{{ notification }}
+							</div>
+						{% endfor %}
+						<h3>Votre Reservation</h3>
+						
+							{{ form_start(form_dispo,  {'attr': {'class' : 'ra-form'}}) }}
+							<div class="check-date-label">
+								{{ form_row(form_dispo.from) }}
+							</div>
+							<div class="check-date-label">
+								{{ form_row(form_dispo.to) }}
+							</div>
+							<button type="submit">Voir les disponibilités 2</button>
+							{{ form_end(form_dispo) }}
+
+
+
+
+							
+							{# {{ form_start(form_reservation,  {'attr': {'class' : 'ra-form'}}) }}
+							<div class="check-date-label">
+								{{ form_row(form_reservation.from) }}
+							</div>
+							<div class="check-date-label">
+								{{ form_row(form_reservation.to) }}
+							</div>
+							<button type="submit">Voir les disponibilités</button>
+							{{ form_end(form_reservation) }} #}
+
+						
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Room Details Section End -->
+
+{% endblock %}
