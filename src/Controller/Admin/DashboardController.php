@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Avis;
 use App\Entity\Categorie;
 use App\Entity\Chambre;
+use App\Entity\Commande;
 use App\Entity\Slider;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -32,6 +33,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Categories', 'fas fa-tags', Categorie::class);
         yield MenuItem::linkToCrud('Chambres', 'fa-solid fa-person-shelter', Chambre::class);
         yield MenuItem::linkToCrud('Slider', 'fa-solid fa-image', Slider::class);
+        yield MenuItem::linkToCrud('Commandes', 'fa-solid fa-list', Commande::class);
         yield MenuItem::linkToCrud('Avis', 'fa-solid fa-comment', Avis::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
