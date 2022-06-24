@@ -56,16 +56,16 @@ class RegistrationFormType extends AbstractType
         ])
 
 
-        ->add('roles', ChoiceType::class, [
-            'choices' => [
-                'Utilisateur' => "ROLE_USER",
-                'Administrateur' => "ROLE_ADMIN"
-            ],
-            "multiple" => true,
-            "attr" => [
-                'class' => "select"
-            ]
-        ])
+        // ->add('roles', ChoiceType::class, [
+        //     'choices' => [
+        //         'Utilisateur' => "ROLE_USER",
+        //         'Administrateur' => "ROLE_ADMIN"
+        //     ],
+        //     "multiple" => true,
+        //     "attr" => [
+        //         'class' => "select"
+        //     ]
+        // ])
         // ->add('agreeTerms', CheckboxType::class, [
         //     'mapped' => false,
         //     'constraints' => [
