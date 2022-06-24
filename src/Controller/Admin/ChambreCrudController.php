@@ -50,7 +50,7 @@ class ChambreCrudController extends AbstractCrudController
         yield TextField::new('file', 'Image')->setFormType(VichImageType::class)->onlyOnForms();
         yield ImageField::new('image' , 'Image')->setBasePath('/img/room/')->onlyOnIndex();
         yield AssociationField::new('categorie', 'Catégorie')->setCrudController(CategoryCrudController::class);
-        yield MoneyField::new('prix' , 'Prix')->setCurrency('EUR');
+        yield MoneyField::new('prix' , 'Prix')->setStoredAsCents()->setCurrency('EUR');
         yield DateTimeField::new('enregistre_at', 'Date')->setFormat('d/M/Y HH:mm aaa')->hideOnForm();
         //yield DateTimeField::new('enregistre_at', 'Date')->setFormTypeOptions(['data' => new \DateTime('now')])->setFormat('d/M/Y HH:mm');
     }

@@ -42,7 +42,8 @@
 										<i class="icon_star"></i>
 										<i class="icon_star-half_alt"></i>
 									</div>
-									<a href="#">Réservez maintenant</a>
+
+
 								</div>
 							</div>
 							<h2>{{ (chambre.prix / 100) | format_number({fraction_digit: 2}) }}€<span>/Pernight</span>
@@ -91,7 +92,9 @@
 								{{ notification }}
 							</div>
 						{% endfor %}
-			    {# ------------------------------------ Avis Form --------------------------------------- #}
+
+
+						{# ------------------------------------ Avis Form --------------------------------------- #}
 						<h4 class="mb-3">Donnez votre avis</h4>
 						{{ form_start(form,  {'attr': {'class' : 'ra-form'}}
 						) }}
@@ -112,33 +115,42 @@
 								{{ notification }}
 							</div>
 						{% endfor %}
+
+
 						<h3>Votre Reservation</h3>
-						
-							{{ form_start(form_dispo,  {'attr': {'class' : 'ra-form'}}) }}
-							<div class="check-date-label">
-								{{ form_row(form_dispo.from) }}
+
+
+						{% for notification in app.flashes('not_disponible') %}
+							<div class="col-12 mx-auto text-center alert alert-warning">
+								{{ notification }}
 							</div>
-							<div class="check-date-label">
-								{{ form_row(form_dispo.to) }}
+						{% endfor %}
+
+						{% for notification in app.flashes('chambre_disponible') %}
+							<div class="col-12">
+								<div class="col-12 mx-auto text-center alert alert-success">
+									{{ notification }}
+								</div>
+
+								<form action="{{ path('panier_ajouter') }}" method="post" class="mb-5">
+									<input type="hidden" name="chambre" value="{{ chambre.id }}">
+									<input type="hidden" name="from" value="{{ from }}">
+									<input type="hidden" name="to" value="{{ to }}">
+									<button type="submit" class="btn btn-success col-12 mt-2">Ajouter au pannier
+										<i class="bi bi-cart2 text-white"></i>
+									</button>
+								</form>
 							</div>
-							<button type="submit">Voir les disponibilités 2</button>
-							{{ form_end(form_dispo) }}
-
-
-
-
-							
-							{# {{ form_start(form_reservation,  {'attr': {'class' : 'ra-form'}}) }}
-							<div class="check-date-label">
-								{{ form_row(form_reservation.from) }}
-							</div>
-							<div class="check-date-label">
-								{{ form_row(form_reservation.to) }}
-							</div>
-							<button type="submit">Voir les disponibilités</button>
-							{{ form_end(form_reservation) }} #}
-
-						
+						{% endfor %}
+						{{ form_start(form_dispo,  {'attr': {'class' : 'ra-form'}}) }}
+						<div class="check-date-label">
+							{{ form_row(form_dispo.from) }}
+						</div>
+						<div class="check-date-label">
+							{{ form_row(form_dispo.to) }}
+						</div>
+						<button type="submit">Voir les disponibilités 2</button>
+						{{ form_end(form_dispo) }}
 
 					</div>
 				</div>

@@ -34,7 +34,7 @@
                         <img src="{{ asset('img/room/'~ chambre.image) }}" alt="">
                         <div class="ri-text">
                             <h4>{{ chambre.titre | capitalize }}</h4>
-                            <h3>{{ (chambre.prix / 100) | format_number({fraction_digit: 2}) }}€<span> /Par nuit</span></h3>
+                            <h3>{{ chambre.prix | format_number({fraction_digit: 2}) }}€<span> /Par nuit</span></h3>
                             <table>
                                 <tbody>
                                     <tr>

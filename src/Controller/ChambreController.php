@@ -123,13 +123,17 @@ class ChambreController extends AbstractController
         $filtre2 = new ChambreFilter();
         $form2 = $this->createForm(ChambreFilterType::class, $filtre2);
         $form2->handleRequest($request);
+        $from = "";
+        $to = "";
 
         if($form2->isSubmitted() && $form2->isValid()){
+            $from = $filtre2->from->format('Y-m-d H:i:s');
+            $to = $filtre2->to->format('Y-m-d H:i:s');
             $ch = $chambreRep->filter($filtre2);
             if(in_array($chambre , $ch , true)){
-                $this->addFlash('reserve-success', 'Merci pour votre réservation !');
+                $this->addFlash('chambre_disponible', 'Cette chambre est dispnible, Réservez la maintenant !');
             }else{
-                $this->addFlash('reserve-success', 'Merci pour votre réservation !');
+                $this->addFlash('not_disponible', 'Cette chambre n\'est pas dispnible pour cette interval !');
             }
         }
 
@@ -142,6 +146,8 @@ class ChambreController extends AbstractController
             'lesAvis' => $lesAvis,
             //'form_reservation' => $form1->createView(),
             'form_dispo' => $form2->createView(),
+            'from' => $from,
+            'to' => $to,
         ]);
     }
 

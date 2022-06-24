@@ -5,8 +5,8 @@ namespace App\Service;
 
 use App\Entity\Commande;
 use App\Entity\DetailsCommande;
-use Doctrine\ORM\EntityManager;
 use App\Repository\ChambreRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 
@@ -18,7 +18,7 @@ class Panier
     private $chambreRep;
     private $manager;
 
-    public function __construct(RequestStack $requestStack, ChambreRepository $chambreRep, EntityManager $manager)
+    public function __construct(RequestStack $requestStack, ChambreRepository $chambreRep, EntityManagerInterface $manager)
     {
         $this->requestStack = $requestStack;
         $this->chambreRep = $chambreRep;
@@ -118,7 +118,7 @@ class Panier
     }
 
 
-    public function paiement($user,$chambre, $from, $to)
+    public function paiement($user)
     {
         $session = $this->requestStack->getSession();
         //$this->verification();
@@ -127,14 +127,12 @@ class Panier
 
         $size = count($panier['id']);
 
-        $acces = false;
 
         $commande = new Commande();
         $commande->setUser($user);
-        $commande->setEnregistrementAt(new \DateTimeImmutable('now'));
-        $days = date_diff($from , $to);
-        $commande->setPrix($chambre->getPrix() * $days->d);
-        $commande->setMontant($this->montant());
+        $commande->setEnregistreAt(new \DateTimeImmutable('now'));
+        $commande->setPrix($this->montant());
+
 
         $this->manager->persist($commande);
         $this->manager->flush();
@@ -145,8 +143,8 @@ class Panier
                 $detail = new DetailsCommande();
                 $detail->setCommande($commande);
                 $detail->setChambre($chambre);
-                $detail->setStartAt($from);
-                $detail->setEndAt($to);
+                $detail->setStartAt($panier['from'][$i]);
+                $detail->setEndAt($panier['to'][$i]);
                 $detail->setPrix($chambre->getPrix());
 
                 $this->manager->persist($detail);

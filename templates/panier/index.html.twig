@@ -5,7 +5,7 @@
 
 {% block body %}
 	<div class="container">
-		<h1 class="text-center">Mon panier</h1>
+		<h1 class="text-center mb-4">Mon panier</h1>
 
 		{% for notification in app.flashes('success') %}
 			<div class="col-md-6 mx-auto text-center alert alert-success">
@@ -37,22 +37,24 @@
 					{% for i in 0..size %}
 						<tr>
 							<td>{{ panier.id[i] }}</td>
-							<td><img src="{{ asset('img/room/'~ panier.image[i]) }}" alt="{{ panier.titre[i] }}"></td>
+							<td><img src="{{ asset('img/room/'~ panier.image[i]) }}" alt="{{ panier.titre[i] }}" width="90"></td>
 							<td>{{ panier.titre[i] }}</td>
 							<td>{{ panier.from[i] | date('d/m/Y') }}</td>
 							<td>{{ panier.to[i] | date('d/m/Y') }}</td>
+                            {% set difference = date(panier.to[i]).diff(date(panier.from[i])) %}
+                            {% set leftDays = difference.days %}
 							<td>{{ panier.prix[i] }}</td>
-							<td>{{ panier.prix[i] * 2 }}</td>
+							<td>{{ panier.prix[i] * leftDays }}</td>
 							<td>
-								<a href="{{ path('panier_retirer' , {'id' : panier.id[i]}) }}">
-									<i class="bi bi-trash3 text-danger fs-4 "></i>
+								<a href="{{ path('panier_retirer' , {'id' : panier.id[i]}) }}"> 
+									<i class="fa-solid fa-trash-can fs-4 text-danger"></i>
 								</a>
 							</td>
 						</tr>
 
 					{% endfor %}
 					<tr>
-						<td colspan="4">
+						<td colspan="6">
 							<strong>Montan total :</strong>
 						</td>
 						<td>
@@ -65,10 +67,10 @@
 
 			</table>
 
-			<a class="btn btn-danger" href="{{ path('panier_vider') }}">Vider le panier</a>
+			<a class="btn btn-danger mb-5 col-2" href="{{ path('panier_vider') }}">Vider le panier</a>
 
 			{% if app.user %}
-				<a class="btn btn-success" href="{{ path('panier_payer') }}">Payer</a>
+				<a class="btn btn-success mb-5 col-2" href="{{ path('panier_payer') }}">Payer</a>
 			{% else %}
 				<h5 class="text-center mt-4">Pour passer la commande veuillez vous
 					<a href="{{ path('app_login') }}">connecter</a>
@@ -78,7 +80,7 @@
 			{% endif %}
 
 		{% else %}
-			<h3 class="text-center mt-5 text-info fst-italic">
+			<h3 class="text-center my-5 text-info fst-italic">
 				Votre panier est vide
             </h3>
 		{% endif %}

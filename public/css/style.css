@@ -688,11 +688,13 @@ ol {
 
 .pop {
     background-color: red;
-    padding-inline: 5px;
+    padding-inline: 6px;
     font-size: 11px;
     border-radius: 50%;
+    color: white;
     position: absolute;
-    top: 17px;
+    top: 18px;
+    left: 35px;
 }
 
 .booking-form form .check-date i {
